@@ -1,3 +1,5 @@
+from dataclasses import dataclass
+
 import numpy as np
 
 np.set_printoptions(formatter={'int': lambda x: "{0:#0{1}x}".format(x, 18)})
@@ -25,7 +27,7 @@ sboxes = [np.array([0xa8, 0x43, 0x5f, 0x06, 0x6b, 0x75, 0x6c, 0x59, 0x71, 0xdf, 
                     0x3c, 0x62, 0xe3, 0xc8, 0xac, 0x52, 0x64, 0x10, 0xd0, 0xd9, 0x13,
                     0x0c, 0x12, 0x29, 0x51, 0xb9, 0xcf, 0xd6, 0x73, 0x8d, 0x81, 0x54,
                     0xc0, 0xed, 0x4e, 0x44, 0xa7, 0x2a, 0x85, 0x25, 0xe6, 0xca, 0x7c,
-                    0x8b, 0x56, 0x80], dtype=np.ubyte),
+                    0x8b, 0x56, 0x80], dtype=np.uint8),
           np.array([0xce, 0xbb, 0xeb, 0x92, 0xea, 0xcb, 0x13, 0xc1, 0xe9, 0x3a, 0xd6,
                     0xb2, 0xd2, 0x90, 0x17, 0xf8, 0x42, 0x15, 0x56, 0xb4, 0x65, 0x1c,
                     0x88, 0x43, 0xc5, 0x5c, 0x36, 0xba, 0xf5, 0x57, 0x67, 0x8d, 0x31,
@@ -49,7 +51,7 @@ sboxes = [np.array([0xa8, 0x43, 0x5f, 0x06, 0x6b, 0x75, 0x6c, 0x59, 0x71, 0xdf, 
                     0x1f, 0x99, 0xac, 0xad, 0x72, 0x2c, 0xdd, 0xd0, 0x87, 0xbe, 0x5e,
                     0xa6, 0xec, 0x04, 0xc6, 0x03, 0x34, 0xfb, 0xdb, 0x59, 0xb6, 0xc2,
                     0x01, 0xf0, 0x5a, 0xed, 0xa7, 0x66, 0x21, 0x7f, 0x8a, 0x27, 0xc7,
-                    0xc0, 0x29, 0xd7], dtype=np.ubyte),
+                    0xc0, 0x29, 0xd7], dtype=np.uint8),
           np.array([0x93, 0xd9, 0x9a, 0xb5, 0x98, 0x22, 0x45, 0xfc, 0xba, 0x6a, 0xdf,
                     0x02, 0x9f, 0xdc, 0x51, 0x59, 0x4a, 0x17, 0x2b, 0xc2, 0x94, 0xf4,
                     0xbb, 0xa3, 0x62, 0xe4, 0x71, 0xd4, 0xcd, 0x70, 0x16, 0xe1, 0x49,
@@ -73,7 +75,7 @@ sboxes = [np.array([0xa8, 0x43, 0x5f, 0x06, 0x6b, 0x75, 0x6c, 0x59, 0x71, 0xdf, 
                     0x2a, 0x65, 0xe8, 0x91, 0xf6, 0xff, 0x13, 0x58, 0xf1, 0x47, 0x0a,
                     0x7f, 0xc5, 0xa7, 0xe7, 0x61, 0x5a, 0x06, 0x46, 0x44, 0x42, 0x04,
                     0xa0, 0xdb, 0x39, 0x86, 0x54, 0xaa, 0x8c, 0x34, 0x21, 0x8b, 0xf8,
-                    0x0c, 0x74, 0x67], dtype=np.ubyte),
+                    0x0c, 0x74, 0x67], dtype=np.uint8),
           np.array([0x68, 0x8d, 0xca, 0x4d, 0x73, 0x4b, 0x4e, 0x2a, 0xd4, 0x52, 0x26,
                     0xb3, 0x54, 0x1e, 0x19, 0x1f, 0x22, 0x03, 0x46, 0x3d, 0x2d, 0x4a,
                     0x53, 0x83, 0x13, 0x8a, 0xb7, 0xd5, 0x25, 0x79, 0xf5, 0xbd, 0x58,
@@ -97,7 +99,7 @@ sboxes = [np.array([0xa8, 0x43, 0x5f, 0x06, 0x6b, 0x75, 0x6c, 0x59, 0x71, 0xdf, 
                     0xa5, 0xfc, 0x80, 0xef, 0xcb, 0xbb, 0x6b, 0x76, 0xba, 0x5a, 0x7d,
                     0x78, 0x0b, 0x95, 0xe3, 0xad, 0x74, 0x98, 0x3b, 0x36, 0x64, 0x6d,
                     0xdc, 0xf0, 0x59, 0xa9, 0x4c, 0x17, 0x7f, 0x91, 0xb8, 0xc9, 0x57,
-                    0x1b, 0xe0, 0x61], dtype=np.ubyte)]
+                    0x1b, 0xe0, 0x61], dtype=np.uint8)]
 inv_sboxes = [np.array([0xa4, 0xa2, 0xa9, 0xc5, 0x4e, 0xc9, 0x03, 0xd9, 0x7e, 0x0f, 0xd2,
                         0xad, 0xe7, 0xd3, 0x27, 0x5b, 0xe3, 0xa1, 0xe8, 0xe6, 0x7c, 0x2a,
                         0x55, 0x0c, 0x86, 0x39, 0xd7, 0x8d, 0xb8, 0x12, 0x6f, 0x28, 0xcd,
@@ -121,7 +123,7 @@ inv_sboxes = [np.array([0xa4, 0xa2, 0xa9, 0xc5, 0x4e, 0xc9, 0x03, 0xd9, 0x7e, 0x
                         0x40, 0x21, 0x9b, 0x09, 0x19, 0x2b, 0x52, 0xde, 0x45, 0xa3, 0xfa,
                         0x51, 0xc2, 0xb5, 0xd1, 0x90, 0xb9, 0xf3, 0x37, 0xc1, 0x0d, 0xba,
                         0x41, 0x11, 0x38, 0x7b, 0xbe, 0xd0, 0xd5, 0x69, 0x36, 0xc8, 0x62,
-                        0x1b, 0x82, 0x8f], dtype=np.ubyte),
+                        0x1b, 0x82, 0x8f], dtype=np.uint8),
               np.array([0x83, 0xf2, 0x2a, 0xeb, 0xe9, 0xbf, 0x7b, 0x9c, 0x34, 0x96, 0x8d,
                         0x98, 0xb9, 0x69, 0x8c, 0x29, 0x3d, 0x88, 0x68, 0x06, 0x39, 0x11,
                         0x4c, 0x0e, 0xa0, 0x56, 0x40, 0x92, 0x15, 0xbc, 0xb3, 0xdc, 0x6f,
@@ -145,7 +147,7 @@ inv_sboxes = [np.array([0xa4, 0xa2, 0xa9, 0xc5, 0x4e, 0xc9, 0x03, 0xd9, 0x7e, 0x
                         0x71, 0xe2, 0xda, 0x2c, 0xb8, 0xb5, 0xcc, 0x6e, 0xa8, 0x6b, 0xad,
                         0x60, 0xc6, 0x08, 0x04, 0x02, 0xe8, 0xf5, 0x4f, 0xa4, 0xf3, 0xc0,
                         0xce, 0x43, 0x25, 0x1c, 0x21, 0x33, 0x0f, 0xaf, 0x47, 0xed, 0x66,
-                        0x63, 0x93, 0xaa], dtype=np.ubyte),
+                        0x63, 0x93, 0xaa], dtype=np.uint8),
               np.array([0x45, 0xd4, 0x0b, 0x43, 0xf1, 0x72, 0xed, 0xa4, 0xc2, 0x38, 0xe6,
                         0x71, 0xfd, 0xb6, 0x3a, 0x95, 0x50, 0x44, 0x4b, 0xe2, 0x74, 0x6b,
                         0x1e, 0x11, 0x5a, 0xc6, 0xb4, 0xd8, 0xa5, 0x8a, 0x70, 0xa3, 0xa8,
@@ -169,7 +171,7 @@ inv_sboxes = [np.array([0xa4, 0xa2, 0xa9, 0xc5, 0x4e, 0xc9, 0x03, 0xd9, 0x7e, 0x
                         0x0d, 0xbe, 0x3d, 0x0a, 0x2d, 0x1f, 0x67, 0x33, 0x19, 0x7b, 0x5e,
                         0xea, 0xde, 0x8b, 0xcb, 0xa9, 0x8c, 0x8d, 0xad, 0x49, 0x82, 0xe4,
                         0xba, 0xc3, 0x15, 0xd1, 0xe0, 0x89, 0xfc, 0xb1, 0xb9, 0xb5, 0x07,
-                        0x79, 0xb8, 0xe1], dtype=np.ubyte),
+                        0x79, 0xb8, 0xe1], dtype=np.uint8),
               np.array([0xb2, 0xb6, 0x23, 0x11, 0xa7, 0x88, 0xc5, 0xa6, 0x39, 0x8f, 0xc4,
                         0xe8, 0x73, 0x22, 0x43, 0xc3, 0x82, 0x27, 0xcd, 0x18, 0x51, 0x62,
                         0x2d, 0xf7, 0x5c, 0x0e, 0x3b, 0xfd, 0xca, 0x9b, 0x0d, 0x0f, 0x79,
@@ -193,16 +195,41 @@ inv_sboxes = [np.array([0xa4, 0xa2, 0xa9, 0xc5, 0x4e, 0xc9, 0x03, 0xd9, 0x7e, 0x
                         0xf2, 0x7d, 0xda, 0x3f, 0xfe, 0x3e, 0xbe, 0xea, 0xaa, 0x44, 0xc6,
                         0xd0, 0x36, 0x48, 0x70, 0x96, 0x77, 0x24, 0x53, 0xdf, 0xf3, 0x83,
                         0x28, 0x32, 0x45, 0x1e, 0xa4, 0xd3, 0xa2, 0x46, 0x6e, 0x9c, 0xdd,
-                        0x63, 0xd4, 0x9d], dtype=np.ubyte)]
-Nb = 0
-Nk = 0
-Nr = 0
-state = None
-round_keys = None
+                        0x63, 0xd4, 0x9d], dtype=np.uint8)]
+
+mds_matrix = np.array([
+    [0x01, 0x01, 0x05, 0x01, 0x08, 0x06, 0x07, 0x04],
+    [0x04, 0x01, 0x01, 0x05, 0x01, 0x08, 0x06, 0x07],
+    [0x07, 0x04, 0x01, 0x01, 0x05, 0x01, 0x08, 0x06],
+    [0x06, 0x07, 0x04, 0x01, 0x01, 0x05, 0x01, 0x08],
+    [0x08, 0x06, 0x07, 0x04, 0x01, 0x01, 0x05, 0x01],
+    [0x01, 0x08, 0x06, 0x07, 0x04, 0x01, 0x01, 0x05],
+    [0x05, 0x01, 0x08, 0x06, 0x07, 0x04, 0x01, 0x01],
+    [0x01, 0x05, 0x01, 0x08, 0x06, 0x07, 0x04, 0x01]
+], dtype=np.uint8)
+
+mds_inv_matrix = np.array([
+    [0xAD, 0x95, 0x76, 0xA8, 0x2F, 0x49, 0xD7, 0xCA],
+    [0xCA, 0xAD, 0x95, 0x76, 0xA8, 0x2F, 0x49, 0xD7],
+    [0xD7, 0xCA, 0xAD, 0x95, 0x76, 0xA8, 0x2F, 0x49],
+    [0x49, 0xD7, 0xCA, 0xAD, 0x95, 0x76, 0xA8, 0x2F],
+    [0x2F, 0x49, 0xD7, 0xCA, 0xAD, 0x95, 0x76, 0xA8],
+    [0xA8, 0x2F, 0x49, 0xD7, 0xCA, 0xAD, 0x95, 0x76],
+    [0x76, 0xA8, 0x2F, 0x49, 0xD7, 0xCA, 0xAD, 0x95],
+    [0x95, 0x76, 0xA8, 0x2F, 0x49, 0xD7, 0xCA, 0xAD]
+], dtype=np.uint8)
 
 
-def init_global(block_size, key_size):
-    global Nb, Nk, Nr, state, round_keys
+@dataclass
+class KalynaContext:
+    Nb: int
+    Nk: int
+    Nr: int
+    state: np.array
+    round_keys: np.array
+
+
+def init_context(block_size, key_size):
     if block_size == 128:
         Nb = 128 // 64
         if key_size == 128:
@@ -235,90 +262,87 @@ def init_global(block_size, key_size):
 
     state = np.zeros(Nb, dtype=np.uint64)
     round_keys = np.zeros((Nr + 1, Nb), dtype=np.uint64)
+    return KalynaContext(Nb=Nb, Nk=Nk, Nr=Nr, state=state, round_keys=round_keys)
 
 
-init_global(128, 128)
-key = np.array([0x0706050403020100, 0x0f0e0d0c0b0a0908], dtype=np.uint64)
+def add_round_key(ctx, round_key):
+    ctx.state += round_key
 
 
-def add_round_key(round_key):
-    state[:] += round_key
+def sub_round_key(ctx, round_key):
+    ctx.state -= round_key
 
 
-def sub_round_key(round_key):
-    state[:] -= round_key
+def xor_round_key(ctx, round_key):
+    ctx.state ^= round_key
 
 
-def xor_round_key(round_key):
-    state[:] ^= round_key
+def encipher_round(ctx):
+    sub_bytes(ctx)
+    shift_rows(ctx)
+    mix_columns(ctx)
 
 
-def encipher_round():
-    sub_bytes()
-    shift_rows()
-    mix_columns()
+def decipher_round(ctx):
+    inv_mix_columns(ctx)
+    inv_shift_rows(ctx)
+    inv_sub_bytes(ctx)
 
 
-def decipher_round():
-    inv_mix_columns()
-    inv_shift_rows()
-    inv_sub_bytes()
+def key_expand_kt(ctx, key):
+    ctx.state.fill(0)
+    ctx.state[0] = ctx.Nb + ctx.Nk + 1
 
-
-def key_expand_kt(key):
-    state[:] = 0
-    state[0] = Nb + Nk + 1
-
-    if Nb == Nk:
+    if ctx.Nb == ctx.Nk:
         k0 = key.copy()
         k1 = key.copy()
     else:
-        k0 = key[0:Nb]
-        k1 = key[Nb:2 * Nb]
+        k0 = key[0:ctx.Nb]
+        k1 = key[ctx.Nb:2 * ctx.Nb]
 
-    add_round_key(k0)
-    encipher_round()
-    xor_round_key(k1)
-    encipher_round()
-    xor_round_key(k0)
-    encipher_round()
-    return state
+    add_round_key(ctx, k0)
+    encipher_round(ctx)
+    xor_round_key(ctx, k1)
+    encipher_round(ctx)
+    add_round_key(ctx, k0)
+    encipher_round(ctx)
+    return ctx.state.copy()
 
 
-def key_expand_even(key, kt):
+def key_expand_even(ctx, key, kt):
     curr_round = 0
     initial_data = key.copy()
-    tmv = np.repeat(0x0001000100010001, Nb, dtype=np.uint64)
+    tmv = np.repeat(np.uint64(0x0001000100010001), ctx.Nb)
     while True:
-        state = kt.copy()
-        add_round_key(tmv)
-        kt_round = state.copy()
-        state = initial_data.copy()
-        add_round_key(kt_round)
-        encipher_round()
-        xor_round_key(kt_round)
-        encipher_round()
-        add_round_key(kt_round)
-        round_keys[curr_round] = state.copy()
+        ctx.state = kt.copy()
+        add_round_key(ctx, tmv)
+        kt_round = ctx.state.copy()
+        ctx.state = initial_data[0:ctx.Nb].copy()
+        add_round_key(ctx, kt_round)
+        encipher_round(ctx)
+        xor_round_key(ctx, kt_round)
+        encipher_round(ctx)
+        add_round_key(ctx, kt_round)
+        ctx.round_keys[curr_round] = ctx.state.copy()
 
-        if curr_round == Nr:
+        if curr_round == ctx.Nr:
             break
 
-        if Nk != Nb:
+        if ctx.Nk != ctx.Nb:
             curr_round += 2
             shift_left(tmv)
-            state = kt.copy()
-            add_round_key(tmv)
-            kt_round = state.copy()
-            state = initial_data[Nb: 2 * Nb]
-            add_round_key(kt_round)
-            encipher_round()
-            xor_round_key(kt_round)
-            encipher_round()
-            add_round_key(kt_round)
+            ctx.state = kt.copy()
+            add_round_key(ctx, tmv)
+            kt_round = ctx.state.copy()
+            ctx.state = initial_data[ctx.Nb: 2 * ctx.Nb].copy()
+            add_round_key(ctx, kt_round)
+            encipher_round(ctx)
+            xor_round_key(ctx, kt_round)
+            encipher_round(ctx)
+            add_round_key(ctx, kt_round)
 
-            round_keys[curr_round] = state.copy()
-            if curr_round == Nr:
+            ctx.round_keys[curr_round] = ctx.state.copy()
+            if curr_round == ctx.Nr:
                 break
 
         curr_round += 2
@@ -326,73 +350,191 @@ def key_expand_even(key, kt):
         rotate(initial_data)
 
 
-def key_expand_odd():
-    for i in range(1, Nr, 2):
-        round_keys[i] = round_keys[i - 1]
-        rotate_left(round_keys[i])
+def key_expand_odd(ctx):
+    for i in range(1, ctx.Nr, 2):
+        ctx.round_keys[i] = ctx.round_keys[i - 1]
+        ctx.round_keys[i] = rotate_left(ctx.round_keys[i - 1])
 
 
-def kalyna_key_expand(key):
-    kt = key_expand_kt(key)
-    key_expand_even(key, kt)
-    key_expand_odd()
+def kalyna_key_expand(ctx, key):
+    kt = key_expand_kt(ctx, key)
+    key_expand_even(ctx, key, kt)
+    key_expand_odd(ctx)
 
 
-def sub_bytes():
-    pass
+def sub_bytes(ctx):
+    s = ctx.state
+    for i in range(ctx.Nb):
+        ctx.state[i] = sboxes[0][(s[i] & np.uint64(0x00000000000000FF))] | \
+                       sboxes[1][(s[i] & np.uint64(0x000000000000FF00)) >> np.uint64(8)] << np.uint64(8) | \
+                       sboxes[2][(s[i] & np.uint64(0x0000000000FF0000)) >> np.uint64(16)] << np.uint64(16) | \
+                       sboxes[3][(s[i] & np.uint64(0x00000000FF000000)) >> np.uint64(24)] << np.uint64(24) | \
+                       sboxes[0][(s[i] & np.uint64(0x000000FF00000000)) >> np.uint64(32)] << np.uint64(32) | \
+                       sboxes[1][(s[i] & np.uint64(0x0000FF000000FF00)) >> np.uint64(40)] << np.uint64(40) | \
+                       sboxes[2][(s[i] & np.uint64(0x00FF000000FF0000)) >> np.uint64(48)] << np.uint64(48) | \
+                       sboxes[3][(s[i] & np.uint64(0xFF00000000FF0000)) >> np.uint64(56)] << np.uint64(56)
 
 
-def inv_sub_bytes():
-    pass
+def inv_sub_bytes(ctx):
+    s = ctx.state
+    for i in range(ctx.Nb):
+        ctx.state[i] = inv_sboxes[0][(s[i] & np.uint64(0x00000000000000FF))] | \
+                       inv_sboxes[1][(s[i] & np.uint64(0x000000000000FF00)) >> np.uint64(8)] << np.uint64(8) | \
+                       inv_sboxes[2][(s[i] & np.uint64(0x0000000000FF0000)) >> np.uint64(16)] << np.uint64(16) | \
+                       inv_sboxes[3][(s[i] & np.uint64(0x00000000FF000000)) >> np.uint64(24)] << np.uint64(24) | \
+                       inv_sboxes[0][(s[i] & np.uint64(0x000000FF00000000)) >> np.uint64(32)] << np.uint64(32) | \
+                       inv_sboxes[1][(s[i] & np.uint64(0x0000FF000000FF00)) >> np.uint64(40)] << np.uint64(40) | \
+                       inv_sboxes[2][(s[i] & np.uint64(0x00FF000000FF0000)) >> np.uint64(48)] << np.uint64(48) | \
+                       inv_sboxes[3][(s[i] & np.uint64(0xFF00000000FF0000)) >> np.uint64(56)] << np.uint64(56)
 
 
-def shift_rows():
-    pass
+def shift_rows(ctx):
+    shift = -1
+    bytes_state = words_to_bytes(ctx.state)
+    nstate = np.zeros(ctx.Nb * 8, dtype=np.uint8)
+    for row in range(8):
+        if row % (8 // ctx.Nb) == 0:
+            shift += 1
+        for col in range(ctx.Nb):
+            nstate[row + ((col + shift) % ctx.Nb) * 8] = bytes_state[row + col * 8]
+    ctx.state = bytes_to_words(nstate)
 
 
-def inv_shift_rows():
-    pass
+def inv_shift_rows(ctx):
+    shift = -1
+    bytes_state = words_to_bytes(ctx.state)
+    nstate = np.zeros(ctx.Nb * 8, dtype=np.uint8)
+    for row in range(8):
+        if row % (8 // ctx.Nb) == 0:
+            shift += 1
+        for col in range(ctx.Nb):
+            nstate[row + col * 8] = bytes_state[row + ((col + shift) % ctx.Nb) * 8]
+    ctx.state = bytes_to_words(nstate)
 
 
-def mix_columns():
-    pass
+def multiply_gf(x, y):
+    r = 0
+    for i in range(8):
+        if (y & 0x1) == 1:
+            r ^= x
+        hbit = x & 0x80
+        x <<= 1
+        if hbit == 0x80:
+            x ^= 0x011d
+        y >>= 1
+    return r
 
 
-def inv_mix_columns():
-    pass
+def matrix_multiply(ctx, matrix):
+    bytes_state = words_to_bytes(ctx.state)
+    for col in range(ctx.Nb):
+        result = np.uint64(0)
+        for row in range(7, -1, -1):
+            product = 0
+            for b in range(7, -1, -1):
+                product ^= multiply_gf(bytes_state[col * 8 + b], matrix[row, b])
+            result |= np.uint64(product) << np.uint64(row * 8)
+        ctx.state[col] = result
 
 
-def shift_left():
-    pass
+def mix_columns(ctx):
+    matrix_multiply(ctx, mds_matrix)
 
 
-def rotate():
-    pass
+def inv_mix_columns(ctx):
+    matrix_multiply(ctx, mds_inv_matrix)
 
 
-def rotate_left():
-    pass
+def rotate(state_value):
+    temp = state_value[0]
+    for i in range(1, len(state_value)):
+        state_value[i - 1] = state_value[i]
+    state_value[-1] = temp
 
 
-def kalyna_encipher(plaintext):
+def shift_left(state_value):
+    for i in range(len(state_value)):
+        state_value[i] <<= np.uint64(1)
+
+
+def rotate_left(state_value):
+    state_size = len(state_value)
+    rotate_bytes = 2 * state_size + 3
+    bytes_num = state_size * 8
+
+    bytes = words_to_bytes(state_value)
+    buffer = np.zeros(rotate_bytes, dtype=np.uint8)
+
+    buffer[0:rotate_bytes] = bytes[0:rotate_bytes]
+    bytes[0:bytes_num - rotate_bytes] = bytes[rotate_bytes:bytes_num]
+    bytes[bytes_num - rotate_bytes:] = buffer[0: rotate_bytes]
+
+    return bytes_to_words(bytes)
+
+
+def words_to_bytes(words):
+    result = []
+    mask = 0x00000000000000FF
+    for i in range(len(words)):
+        for j in range(8):
+            result.append((words[i] & np.uint64(mask << (j * 8))) >> np.uint64((j * 8)))
+    return np.array(result, dtype=np.uint8)
+
+
+def bytes_to_words(bytes):
+    result = []
+    for i in range(len(bytes) // 8):
+        word = np.uint64(0x00000000000000)
+        for j in range(8):
+            word |= np.uint64(bytes[i * 8 + j]) << np.uint64((j * 8))
+        result.append(word)
+    return np.array(result, dtype=np.uint64)
+
+
+def kalyna_encipher(ctx, plaintext):
     curr_round = 0
-    state = plaintext.copy()
-    add_round_key(round_keys[curr_round])
-    for curr_round in range(1, Nr):
-        encipher_round()
-        xor_round_key(round_keys[curr_round])
-    encipher_round()
-    add_round_key(round_keys[Nr])
-    return state.copy()
+    ctx.state = plaintext.copy()
+    add_round_key(ctx, ctx.round_keys[curr_round])
+    for curr_round in range(1, ctx.Nr):
+        encipher_round(ctx)
+        xor_round_key(ctx, ctx.round_keys[curr_round])
+    encipher_round(ctx)
+    add_round_key(ctx, ctx.round_keys[ctx.Nr])
+    return ctx.state.copy()
 
 
-def kalyna_decipher(ciphertext):
-    curr_round = Nr
-    state = ciphertext.copy()
-    sub_round_key(round_keys[curr_round])
-    for curr_round in range(Nr - 1, 0, -1):
-        decipher_round()
-        xor_round_key(round_keys[curr_round])
-    decipher_round()
-    sub_round_key(round_keys[0])
-    return state.copy()
+def kalyna_decipher(ctx, ciphertext):
+    curr_round = ctx.Nr
+    ctx.state = ciphertext.copy()
+    sub_round_key(ctx, ctx.round_keys[curr_round])
+    for curr_round in range(ctx.Nr - 1, 0, -1):
+        decipher_round(ctx)
+        xor_round_key(ctx, ctx.round_keys[curr_round])
+    decipher_round(ctx)
+    sub_round_key(ctx, ctx.round_keys[0])
+    return ctx.state.copy()
+
+
+def to_hex(arr):
+    if arr.dtype == np.uint64:
+        arr = words_to_bytes(arr)
+    return ''.join(hex(byte)[2:].zfill(2) for byte in arr)
+
+
+def to_words(hex_string):
+    return bytes_to_words(
+        np.array([int(hex_string[i:i + 2], 16) for i in range(0, len(hex_string), 2)], dtype=np.uint8))
+
+
+def to_blocks(message, block_size_bits=128, decode=False):
+    """
+    Split list of words into lists of length block_size_bits // 64.
+    When decode=False pad first block with zeros and write the position of first non-padded element into first block byte.
+    """
+    block_size = block_size_bits // 64
+    if decode:
+        return (message[block_size * i:block_size * (i + 1)] for i in range(len(message) // block_size))
+    first_block_start = (block_size - len(message) % block_size - 1) % block_size + 1
+    message = np.array([first_block_start] + [0] * (block_size - (len(message) + 1) % block_size) + message,
+                       dtype=np.uint64)
+    return (message[block_size * i:block_size * (i + 1)] for i in range(len(message) // block_size))
