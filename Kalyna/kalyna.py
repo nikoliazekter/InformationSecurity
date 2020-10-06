@@ -425,6 +425,23 @@ def multiply_gf(x, y):
     return r
 
 
+# def matrix_multiply(ctx, matrix):
+#     bytes_state = words_to_bytes(ctx.state)
+#     for col in range(ctx.Nb):
+#         result = np.uint64(0)
+#         for row in range(7, -1, -1):
+#             product = 0
+#             for b in range(7, -1, -1):
+#                 product ^= multiply_gf(bytes_state[col * 8 + b], matrix[row, b])
+#             result |= np.uint64(product) << np.uint64(row * 8)
+#         ctx.state[col] = result
+
+mult_table = [[0 for j in range(256)] for i in range(256)]
+for i in range(256):
+    for j in range(256):
+        mult_table[i][j] = multiply_gf(np.uint8(i), np.uint8(j))
+
+
 def matrix_multiply(ctx, matrix):
     bytes_state = words_to_bytes(ctx.state)
     for col in range(ctx.Nb):
@@ -432,7 +449,7 @@ def matrix_multiply(ctx, matrix):
         for row in range(7, -1, -1):
             product = 0
             for b in range(7, -1, -1):
-                product ^= multiply_gf(bytes_state[col * 8 + b], matrix[row, b])
+                product ^= mult_table[bytes_state[col * 8 + b]][matrix[row, b]]
             result |= np.uint64(product) << np.uint64(row * 8)
         ctx.state[col] = result
 
