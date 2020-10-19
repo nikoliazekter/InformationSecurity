@@ -13,7 +13,7 @@ Implemented ciphers:
  - AES-CTR (`aec_ctr.py`)
   
 Other code files:
-- `aes.py` implements AES block cipher, used by different modes of operatoin
+- `aes.py` implements AES block cipher, used by different modes of operation
 - `helpers.py` contains common utility functions that are used in several ciphers
 -  `benchmark.py` measures execution time of all implemented algorithms
 -  `tests.py`contains unit tests adopted from specifications
