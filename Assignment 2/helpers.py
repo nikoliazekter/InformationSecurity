@@ -18,6 +18,7 @@ def stream_to_blocks(stream, n, padding=False):
         if len(new_block) < n:
             if padding:
                 new_block = pad(new_block, n)
+            if new_block:
                 yield new_block
             return
         yield new_block
@@ -38,7 +39,7 @@ def blocks_to_stream(blocks, padding=False):
 
 def pad(block, n):
     padding_len = n - len(block)
-    return block + [padding_len] * padding_len
+    return block + [np.uint8(padding_len)] * padding_len
 
 
 def unpad(block):
