@@ -109,6 +109,11 @@ class Kupyna:
             [0x01, 0x05, 0x01, 0x08, 0x06, 0x07, 0x04, 0x01]
         ]
 
+        self.mult_table = [[0 for j in range(256)] for i in range(256)]
+        for x in range(256):
+            for y in range(256):
+                self.mult_table[x][y] = self.multiply_gf(x, y)
+
         self.n = n
         if 8 <= n <= 256:
             self.l = 512
@@ -188,7 +193,7 @@ class Kupyna:
             for row in range(7, -1, -1):
                 product = 0
                 for b in range(7, -1, -1):
-                    product ^= self.multiply_gf(state[b][col], self.mds_matrix[row][b])
+                    product ^= self.mult_table[state[b][col]][self.mds_matrix[row][b]]
                 new_state[row][col] = product
         return new_state
 
