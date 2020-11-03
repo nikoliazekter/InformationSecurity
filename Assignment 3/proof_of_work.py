@@ -3,31 +3,29 @@ import time
 from kupyna import Kupyna
 from sha256 import SHA256
 
-message = '000100'
 
-sha = SHA256()
-sha_hash = sha.hash(message)
-start = time.time()
-for i in range(10000000):
-    hex_i = hex(i)[2:].zfill(len(message))
-    if sha_hash == sha.hash(hex_i):
-        print(f'SHA-256: proof of work took {time.time() - start} s.')
-        break
+def proof_of_work(hash_function, prefix, n):
+    mask = int('1' * n, 2)
+    i = 0
+    start = time.time()
+    while True:
+        hex_i = hex(i)[2:]
+        hex_i = '0' * (len(hex_i) % 2) + hex_i
+        message = prefix + hex_i
+        res = hash_function(message) & mask
+        if res == 0:
+            # print(i)
+            break
+        i += 1
+    return time.time() - start
 
+
+prefix = '01020304050607080910'
+sha256 = SHA256()
 kupyna256 = Kupyna(256)
-kupyna256_hash = kupyna256.hash(message)
-start = time.time()
-for i in range(10000000):
-    hex_i = hex(i)[2:].zfill(len(message))
-    if kupyna256_hash == kupyna256.hash(hex_i):
-        print(f'Kupyna-256: proof of work took {time.time() - start} s.')
-        break
-
 kupyna512 = Kupyna(512)
-kupyna512_hash = kupyna512.hash(message)
-start = time.time()
-for i in range(10000000):
-    hex_i = hex(i)[2:].zfill(len(message))
-    if kupyna512_hash == kupyna512.hash(hex_i):
-        print(f'Kupyna-512: proof of work took {time.time() - start} s.')
-        break
+for n in range(2, 10):
+    print(f'Number of zero bits: {n}')
+    print(f'SHA-256 time: {proof_of_work(sha256.hash, prefix, n):.4} s')
+    print(f'Kupyna-256 time: {proof_of_work(kupyna256.hash, prefix, n):.4} s')
+    print(f'Kupyna-512 time: {proof_of_work(kupyna512.hash, prefix, n):.4} s')
