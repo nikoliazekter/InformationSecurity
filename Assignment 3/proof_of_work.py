@@ -20,11 +20,11 @@ def proof_of_work(hash_function, prefix, n):
     return time.time() - start
 
 
-prefix = '01020304050607080910'
+prefix = '0102030405'
 sha256 = SHA256()
 kupyna256 = Kupyna(256)
 kupyna512 = Kupyna(512)
-for n in range(2, 10):
+for n in range(2, 20):
     print(f'Number of zero bits: {n}')
     print(f'SHA-256 time: {proof_of_work(sha256.hash, prefix, n):.4} s')
     print(f'Kupyna-256 time: {proof_of_work(kupyna256.hash, prefix, n):.4} s')
