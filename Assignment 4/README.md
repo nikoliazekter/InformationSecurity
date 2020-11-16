@@ -13,7 +13,8 @@ Code is divided into 6 files:
 ## Benchmarking results   
   
 N is bit length of prime numbers p and q.
-M is bit length of encrypted message.
+
+M is bit length of plaintext.
   
 | N    | M    | Keygen   | RSA enc    | RSA dec     | RSA-OAEP enc | RSA-OAEP dec |
 |------|------|----------|------------|-------------|--------------|--------------|
